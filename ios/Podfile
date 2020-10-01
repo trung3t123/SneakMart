@@ -10,6 +10,8 @@ target 'SneakMart' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNSharedElement', :path => '../node_modules/react-native-shared-element'
+
   target 'SneakMartTests' do
     inherit! :complete
     # Pods for testing

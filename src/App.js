@@ -14,29 +14,55 @@ import {
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { Provider } from 'react-redux';
 import HomePage from './Screens/HomePage';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import store from './redux/store';
+import ItemDetails from './Screens/ItemDetails/ItemDetails';
+import List from './Screens/List';
 
-
+const Stack = createSharedElementStackNavigator();
 //http://demo.designing-world.com/newsten-v1.0.1/search.html
 
 const App: () => React$Node = () => {
 
-	const MyTheme = {
-		...DefaultTheme,
-		colors: {
-			...DefaultTheme.colors,
-			primary: 'pink',
-		},
-	};
+
 
 	return (
 		<Provider store={store}>
 			<StatusBar barStyle="dark-content" />
 			<View style={{ flex: 1 }}>
-				<NavigationContainer theme={MyTheme} >
+				<NavigationContainer  >
+					<Stack.Navigator headerMode="screen"  initialRouteName="List">
+						<Stack.Screen name="HomePage" component={HomePage} />
+						<Stack.Screen name="List" component={List} />
+						<Stack.Screen
+							name="ItemDetails"
+							component={ItemDetails}
+							sharedElementsConfig={(route, otherRoute, showing) => {
+								return [
+									{
+										id: 'imageShoes',
+									},
+								];
+							}}
+							// options={() => ({
+							// 	gestureEnabled: false,
+							// 	transitionSpec : {
+							// 		open : {animation :'timing',config:{duration: 1000}},
+							// 		close : {animation :'timing',config:{duration: 1000}}
+							// 	},
+							// 	cardStyleInterpolator: ({ current: { progress } }) => {
+							// 		return {
+							// 			cardStyle: {
+							// 				opacity: progress,
+							// 			}
+							// 		}
+							// 	}
+							// })}
+						/>
+					</Stack.Navigator>
 					{/* bottom nav */}
-					<HomePage />
+					{/* <HomePage /> */}
 				</NavigationContainer>
 			</View>
 		</Provider>
