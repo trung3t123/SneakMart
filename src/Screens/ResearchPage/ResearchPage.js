@@ -37,7 +37,7 @@ function ResearchPage(props) {
 			<View style={styles.contentContainer}>
 				<BrandLabels listLabels={listLabels} />
 				<View style={{ flex: 30, flexDirection: 'row' }} >
-					<ContentItem />
+					<ContentItem navigation={props.navigation} />
 					<FeatureList />
 				</View>
 			</View>

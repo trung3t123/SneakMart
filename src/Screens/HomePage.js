@@ -10,6 +10,8 @@ import SearchPage from './SearchPages/SearchPage';
 import { setProduct } from '../redux/actions/Product';
 import { constData } from '../Utils/ConstData';
 import Account from './Account/Account'
+import { getUserData } from '../redux/actions/User';
+
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -19,9 +21,14 @@ const styles = StyleSheet.create({
 const Tab = createMaterialBottomTabNavigator();
 
 function HomePage(props) {
-	const dispatch = useDispatch()
-	dispatch(setProduct(constData));
 
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(setProduct(constData));
+	dispatch(getUserData());
+	}, [])
+	
 	return (
 		<View style={{ flex: 1 }}>
 			<View style={{ flex: 1 }}>

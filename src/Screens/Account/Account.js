@@ -5,6 +5,10 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import DropdownAlert from 'react-native-dropdownalert';
 import IMAGE from '../../Utils/ImagesConstant';
+import { connect } from 'react-redux';
+import { getUserData } from '../../redux/actions/User';
+import AsyncStorage from '@react-native-community/async-storage';
+import AccountDetails from './AccountDetails/AccountDetails';
 
 const SCREEN_HEIGHT = Dimensions.get("screen").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -40,42 +44,62 @@ class Account extends Component {
 
 	}
 
+	componentDidMount = () => {
+		// this.props.getUserDetails();
+	}
+
 
 	render() {
-		return (
-			<View style={{ flex: 1 }}>
-				<ImageBackground style={{ flex: 1 }} resizeMode="cover" blurRadius={10} source={IMAGE.ROAD_BACKGROUND}>
+		if (this.props.user.loggedInStatus) {
+			return (
+				<AccountDetails />
+			)
+		} else
+			return (
+				<View style={{ flex: 1 }}>
+					<ImageBackground style={{ flex: 1 }} resizeMode="cover" blurRadius={10} source={IMAGE.ROAD_BACKGROUND}>
 
-					<KeyboardAvoidingView
-						behavior={Platform.OS == "ios" ? "padding" : "height"}
+						<KeyboardAvoidingView
+							behavior={Platform.OS == "ios" ? "padding" : "height"}
 
-						style={{
-							flex: 1,
-							backgroundColor: 'rgba(0,0,0,0.6)',
-						}}>
-						<DropdownAlert ref={ref => this.dropDownAlertRef = ref} />
+							style={{
+								flex: 1,
+								backgroundColor: 'rgba(0,0,0,0.6)',
+							}}>
+							<DropdownAlert ref={ref => this.dropDownAlertRef = ref} />
 
-						<Image source={IMAGE.APP_ICON} style={{ height: 200, width: 200, resizeMode: 'center', flex: 1.5, alignSelf: 'center' }} />
+							<Image source={IMAGE.APP_ICON} style={{ height: 200, width: 200, resizeMode: 'center', flex: 1.5, alignSelf: 'center' }} />
 
-						<Tab.Navigator
-							style={{ flex: 2 }}
-							tabBarOptions={this.state.tabBarOptions}
-						>
-							<Tab.Screen
-								name='Login'
-								component={Login} />
-							<Tab.Screen
-								name='Register'
-								component={Register} />
-						</Tab.Navigator>
-					</KeyboardAvoidingView>
-				</ImageBackground>
-			</View >
-		)
+							<Tab.Navigator
+								style={{ flex: 2 }}
+								tabBarOptions={this.state.tabBarOptions}
+							>
+								<Tab.Screen
+									name='Login'
+									component={Login} />
+								<Tab.Screen
+									name='Register'
+									component={Register} />
+							</Tab.Navigator>
+						</KeyboardAvoidingView>
+					</ImageBackground>
+				</View >
+			)
+	}
+}
+
+function mapStateToProps(state) {
+	return {
+		user: state.user
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		getUserDetails: () => dispatch(getUserData())
 	}
 }
 
 
 
-
-export default Account;
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

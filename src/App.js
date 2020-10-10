@@ -12,7 +12,7 @@ import {
 	StatusBar, StyleSheet, View
 } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import HomePage from './Screens/HomePage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
@@ -25,14 +25,14 @@ const Stack = createSharedElementStackNavigator();
 
 const App: () => React$Node = () => {
 
-
+	
 
 	return (
 		<Provider store={store}>
 			<StatusBar barStyle="dark-content" />
 			<View style={{ flex: 1 }}>
 				<NavigationContainer  >
-					<Stack.Navigator headerMode="screen"  initialRouteName="List">
+					<Stack.Navigator headerMode="none" initialRouteName="HomePage">
 						<Stack.Screen name="HomePage" component={HomePage} />
 						<Stack.Screen name="List" component={List} />
 						<Stack.Screen
@@ -41,24 +41,24 @@ const App: () => React$Node = () => {
 							sharedElementsConfig={(route, otherRoute, showing) => {
 								return [
 									{
-										id: 'imageShoes',
+										id: 'itemDetailsShared',
 									},
 								];
 							}}
-							// options={() => ({
-							// 	gestureEnabled: false,
-							// 	transitionSpec : {
-							// 		open : {animation :'timing',config:{duration: 1000}},
-							// 		close : {animation :'timing',config:{duration: 1000}}
-							// 	},
-							// 	cardStyleInterpolator: ({ current: { progress } }) => {
-							// 		return {
-							// 			cardStyle: {
-							// 				opacity: progress,
-							// 			}
-							// 		}
-							// 	}
-							// })}
+							options={() => ({
+								gestureEnabled: false,
+								transitionSpec: {
+									open: { animation: 'timing', config: { duration: 500 } },
+									close: { animation: 'timing', config: { duration: 500 } }
+								},
+								// cardStyleInterpolator: ({ current: { progress } }) => {
+								// 	return {
+								// 		cardStyle: {
+								// 			opacity: progress,
+								// 		}
+								// 	}
+								// }
+							})}
 						/>
 					</Stack.Navigator>
 					{/* bottom nav */}

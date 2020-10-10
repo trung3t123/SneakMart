@@ -6,6 +6,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import IMAGE from '../../../Utils/ImagesConstant';
+import { connect } from 'react-redux';
+import { register } from '../../../redux/actions/User';
 
 
 const SCREEN_HEIGHT = Dimensions.get("screen").height;
@@ -13,7 +15,8 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
 	continue: {
-		marginTop: 60,
+		position: 'absolute',
+		bottom: 25,
 		alignItems: 'center',
 		flexDirection: 'row',
 	},
@@ -48,18 +51,18 @@ class Register extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userPhone: '0369935390',
-			userPassword: 'trung',
+			// userPhone: '0369935390',
+			userPassword: '1123',
 			userMail: 'a6.nero3@gmail.com',
 		};
 	}
 
 	registerButtonPressedHandler() {
-		// this.props.registerUser({
-		// 	userPhone: this.state.userPhone,
-		// 	userPassword: this.state.userPassword,
-		// 	userMail: this.state.userMail,
-		// })
+		this.props.register({
+			// userPhone: this.state.userPhone,
+			userPassword: this.state.userPassword,
+			userMail: this.state.userMail
+		});
 	}
 
 
@@ -69,12 +72,20 @@ class Register extends Component {
 				<View style={{ flex: 1, backgroundColor: ' rgba(0,0,0,0.4)', alignItems: 'center' }}>
 
 					<View style={{ flex: 1 }}>
-						<View style={styles.textInput}>
+						{/* <View style={styles.textInput}>
 							<AntDesign name="phone" size={30} color='#ffffff' />
 							<TextInput
 								value={this.state.userPhone}
 								placeholder='Phone number'
 								onChangeText={(value) => { this.setState({ userPhone: value }) }}
+								style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 80 / 100 }} />
+						</View> */}
+						<View style={styles.textInput}>
+							<MaterialIcons name="alternate-email" size={30} color='#ffffff' />
+							<TextInput
+								value={this.state.userMail}
+								placeholder='Email'
+								onChangeText={(value) => { this.setState({ userMail: value }) }}
 								style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 80 / 100 }} />
 						</View>
 						<View style={{ flexDirection: 'row' }}>
@@ -94,14 +105,7 @@ class Register extends Component {
 									style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 30 / 100 }} />
 							</View>
 						</View>
-						<View style={styles.textInput}>
-							<MaterialIcons name="alternate-email" size={30} color='#ffffff' />
-							<TextInput
-								value={this.state.userMail}
-								placeholder='Email'
-								onChangeText={(value) => { this.setState({ userMail: value }) }}
-								style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 80 / 100 }} />
-						</View>
+
 						<View style={styles.continue}>
 							<TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style={styles.backButton}>
 								<Ionicons name="chevron-back" color="white" size={50} />
@@ -119,7 +123,17 @@ class Register extends Component {
 	}
 }
 
+function mapStateToProps(state) {
+	return {
+		user: state.user
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		register: (user) => dispatch(register(user))
+	}
+}
 
 
-
-export default Register;
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

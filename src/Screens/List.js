@@ -7,7 +7,7 @@ import IMAGE from '../Utils/ImagesConstant';
 function List({ navigation }) {
 
 	const item = {
-		id: 'imageShoes',
+		id : 'imageShoes',
 		source: IMAGE.BLUE_SHOES
 	}
 
@@ -15,7 +15,7 @@ function List({ navigation }) {
 		
 
 		<SharedElement id='imageShoes' >
-			<TouchableOpacity onPress={() => navigation.push('ItemDetails', { item })}>
+			<TouchableOpacity onPress={() => navigation.push('ItemDetails')}>
 				<View style={{ width: 200, height: 300, backgroundColor: 'red' }}>
 					{/* <Image style={{ width: 300, height: 300 }} source={item.source} /> */}
 				</View>

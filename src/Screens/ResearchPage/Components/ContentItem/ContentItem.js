@@ -4,7 +4,7 @@ import Item from './Item'
 import IMAGE from '../../../../Utils/ImagesConstant';
 import Carousel from 'react-native-snap-carousel';
 
-export default function ContentItem() {
+export default function ContentItem(props) {
 	const [activeIndex, setActiveIndex] = useState(0)
 	const [carouselItems, setCarouselItems] = useState([
 		{
@@ -40,6 +40,7 @@ export default function ContentItem() {
 	function _renderItem({ item, index }) {
 		return (
 			<Item
+				navigation={props.navigation}
 				brandItem={item.brandItem}
 				nameItem={item.nameItem}
 				priceItem={item.priceItem}
@@ -50,12 +51,12 @@ export default function ContentItem() {
 	}
 
 	return (
-			<Carousel
-				data={carouselItems}
-				sliderWidth={400}
-				itemWidth={250}
-				renderItem={_renderItem}
-				onSnapToItem={index => setActiveIndex(index)} />
+		<Carousel
+			data={carouselItems}
+			sliderWidth={400}
+			itemWidth={250}
+			renderItem={_renderItem}
+			onSnapToItem={index => setActiveIndex(index)} />
 	);
 
 	// return (

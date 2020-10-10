@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 		transform: [{ rotate: '90deg' }],
 		width: deviceHeight / 2,
 		position: 'absolute',
-		left: -deviceWidth / 3,
+		left: -150,
 		top: deviceHeight / 4
 	},
 	featureText: {
