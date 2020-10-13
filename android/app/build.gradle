@@ -132,8 +132,12 @@ android {
         applicationId "com.sneakmart"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+				multiDexEnabled true
+        versionCode 6
+        versionName "2.0.0"
+				ndk {
+					abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+				}
     }
     splits {
         abi {
@@ -144,6 +148,15 @@ android {
         }
     }
     signingConfigs {
+				release {
+					if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+						storeFile file(MYAPP_RELEASE_STORE_FILE)
+						storePassword MYAPP_RELEASE_STORE_PASSWORD
+						keyAlias MYAPP_RELEASE_KEY_ALIAS
+						keyPassword MYAPP_RELEASE_KEY_PASSWORD
+					}
+				}
+
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
@@ -158,9 +171,9 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+						signingConfig signingConfigs.release
         }
     }
 
@@ -184,8 +197,9 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
+		compile 'com.android.support:multidex:1.0.1' 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+		implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
