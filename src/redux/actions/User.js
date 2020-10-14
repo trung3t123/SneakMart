@@ -1,13 +1,14 @@
 import Axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
+const localhost = 'http://192.168.0.98'
 
 export const logoutUser = () => {
 	console.log('helo, logged out');
 	return function (dispatch) {
 		AsyncStorage.getItem('token').then((token) => {
 			console.log('token', token);
-			return Axios.post('http://192.168.0.99:5035/api/users/logout', '', {
+			return Axios.post(localhost + ':5035/api/users/logout', '', {
 				headers: {
 					'Content-Type': 'application/json',
 					Accept: 'application/json',
@@ -43,7 +44,7 @@ export const loginFacebook = () => {
 					console.log("Login cancelled");
 				} else {
 					AccessToken.getCurrentAccessToken().then(data => {
-						console.log('data', data.accessToken);
+						console.log('facebookToken', data.accessToken);
 						initUser(data.accessToken)
 					}).catch(err => {
 						console.log('error', err);
@@ -56,11 +57,11 @@ export const loginFacebook = () => {
 	}
 }
 
-export const loginUser = (phoneUser, passwordUser) => {
+export const loginUser = (userMail, passwordUser) => {
 	return function (dispatch) {
-		return Axios.post("http://192.168.0.99:5035/api/user/postLogin",
+		return Axios.post(localhost + ":5035/api/user/postLogin",
 			{
-				userPhone: phoneUser,
+				userMail: userMail,
 				userPassword: passwordUser
 			})
 			.then(async (response) => {
@@ -83,9 +84,9 @@ export const loginUser = (phoneUser, passwordUser) => {
 
 export const register = (user) => {
 	return function (dispatch) {
-		return Axios.post('http://192.168.0.99:5035/api/user/',
+		return Axios.post(localhost + ':5035/api/user/',
 			{
-				userPhone: user.userPhone,
+				userName: user.userName,
 				userPassword: user.userPassword,
 				userMail: user.userMail
 			}).then((response) => {
@@ -104,7 +105,7 @@ export const register = (user) => {
 export const getUserData = () => {
 	return function (dispatch) {
 		AsyncStorage.getItem('token').then((token) => {
-			return Axios.get('http://192.168.0.99:5035/api/users/me', {
+			return Axios.get(localhost + ':5035/api/users/me', {
 				headers: {
 					'Content-Type': 'application/json',
 					Accept: 'application/json',

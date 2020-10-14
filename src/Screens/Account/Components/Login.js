@@ -52,7 +52,7 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userPhone: '0369935390',
+			userMail: 'a6.nero3@gmail.com',
 			userPassword: '1123',
 		};
 	}
@@ -62,11 +62,11 @@ class Login extends Component {
 	}
 
 	loginUser = () => {
-		const { userPhone, userPassword } = this.state;
+		const { userMail, userPassword } = this.state;
 
-		console.log('userPhone: ' + userPhone);
+		console.log('userMail: ' + userMail);
 		console.log('userPassword: ' + userPassword);
-		this.props.login(userPhone, userPassword);
+		this.props.login(userMail, userPassword);
 	}
 
 	render() {
@@ -76,8 +76,8 @@ class Login extends Component {
 				<ImageBackground style={{ flex: 1 }} source={IMAGE.ROAD_BACKGROUND} resizeMode="cover" blurRadius={10}>
 					<View style={{ flex: 1, alignItems: 'center', backgroundColor: ' rgba(0,0,0,0.4)' }}>
 						<View style={styles.textInput}>
-							<AntDesign name="phone" size={30} color='#ffffff' />
-							<TextInput defaultValue={this.state.userPhone} onChangeText={(value) => this.setState({ userPhone: value })}
+							<MaterialIcons name="alternate-email" size={30} color='#ffffff' />
+							<TextInput defaultValue={this.state.userMail} onChangeText={(value) => this.setState({ userMail: value })}
 								style={{ paddingLeft: 10, color: '#ffffff', width: SCREEN_WIDTH * 80 / 100 }} />
 						</View>
 						<View style={styles.textInput}>
@@ -85,9 +85,6 @@ class Login extends Component {
 							<TextInput defaultValue={this.state.userPassword} secureTextEntry={true} onChangeText={(value) => this.setState({ userPassword: value })}
 								style={{ paddingLeft: 10, color: '#ffffff', width: SCREEN_WIDTH * 80 / 100 }} />
 						</View>
-
-
-
 						<View style={styles.loginState}>
 							<TouchableOpacity onPress={this.facebookLoginHandler} style={styles.facebookLoginButton} >
 								<View style={{ position: "absolute", left: 10 }} >
@@ -122,7 +119,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		login: (userPhone, userPassword) => dispatch(loginUser(userPhone, userPassword)),
+		login: (userMail, userPassword) => dispatch(loginUser(userMail, userPassword)),
 		loginFacebook: () => dispatch(loginFacebook())
 	}
 }

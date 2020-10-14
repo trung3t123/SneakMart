@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 		marginRight: 10,
 		alignItems: 'center',
 		justifyContent: 'center',
-	}
+	},
 })
 
 
@@ -51,7 +51,7 @@ class Register extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// userPhone: '0369935390',
+			userName: 'Trung',
 			userPassword: '1123',
 			userMail: 'a6.nero3@gmail.com',
 		};
@@ -59,10 +59,13 @@ class Register extends Component {
 
 	registerButtonPressedHandler() {
 		this.props.register({
-			// userPhone: this.state.userPhone,
+			userName: this.state.userName,
 			userPassword: this.state.userPassword,
 			userMail: this.state.userMail
 		});
+	}
+	registerFacebook() {
+		this.props.registerWithFacebook
 	}
 
 
@@ -72,14 +75,7 @@ class Register extends Component {
 				<View style={{ flex: 1, backgroundColor: ' rgba(0,0,0,0.4)', alignItems: 'center' }}>
 
 					<View style={{ flex: 1 }}>
-						{/* <View style={styles.textInput}>
-							<AntDesign name="phone" size={30} color='#ffffff' />
-							<TextInput
-								value={this.state.userPhone}
-								placeholder='Phone number'
-								onChangeText={(value) => { this.setState({ userPhone: value }) }}
-								style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 80 / 100 }} />
-						</View> */}
+
 						<View style={styles.textInput}>
 							<MaterialIcons name="alternate-email" size={30} color='#ffffff' />
 							<TextInput
@@ -104,9 +100,20 @@ class Register extends Component {
 									placeholder='Again'
 									style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 30 / 100 }} />
 							</View>
+
+						</View>
+						<View style={styles.textInput}>
+							<AntDesign name="user" size={30} color='#ffffff' />
+							<TextInput
+								value={this.state.userName}
+								placeholder='User Name'
+								onChangeText={(value) => { this.setState({ userName: value }) }}
+								style={{ color: 'white', paddingLeft: 10, width: SCREEN_WIDTH * 80 / 100 }} />
 						</View>
 
+
 						<View style={styles.continue}>
+
 							<TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style={styles.backButton}>
 								<Ionicons name="chevron-back" color="white" size={50} />
 							</TouchableOpacity>
